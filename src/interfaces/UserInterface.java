@@ -5,6 +5,8 @@ import model.User;
 
 public interface UserInterface {
 
-     boolean createUser(String fullName, String email ,String password ,String address);
+     User createUser(String fullName, String email ,String password ,String address);
      List<User> getAllUsers();
+     User findUserByEmail(String email);
+
 }

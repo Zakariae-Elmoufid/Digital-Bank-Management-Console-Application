@@ -18,7 +18,11 @@ public class User {
         this.address = address;
     }
 
-    public string getEmail(){
+    public String getEmail(){
         return this.email;
+    }
+
+    public String getPassword(){
+        return this.password;
     }
 }

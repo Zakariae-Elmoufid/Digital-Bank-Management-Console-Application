@@ -7,18 +7,26 @@ import java.util.ArrayList;
 
 public class UserRepository implements UserInterface {
 
-    List<User> users = new ArrayList<>();
+    private  List<User> users = new ArrayList<>();
 
 
-    public boolean createUser(String id, String fullName, String email, String password, String address) {
+    public User createUser( String fullName, String email, String password, String address) {
         User  user = new User(fullName , email ,password,address);
-        if(users.add(user)){
-            return true;
-        }
-        return false;
+        users.add(user);
+        System.out.println("User created"+ user.getEmail());
+        return user;
     }
 
     public List<User> getAllUsers() {
         return users;
+    }
+
+    public User findUserByEmail(String email){
+        for(User user : users){
+             if(user.getEmail().equals(email)){
+             return user ;
+            }
+        }
+        return null;
     }
 }

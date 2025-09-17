@@ -2,6 +2,7 @@ package services;
 
 import  model.User;
 import  repositories.UserRepository;
+import ui.AccountMenu;
 
 import java.util.List;
 
@@ -9,36 +10,35 @@ import java.util.List;
 public class AuthService {
 
 
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
-    public  AuthService (){
-          userRepository = new UserRepository();
+    public  AuthService (UserRepository userRepository){
+          this.userRepository = userRepository;
     }
 
-    public void Register(String fullName ,String email,String password,String address){
-        if(password.toCharArray().length > 6){
-            System.out.println("password must less than 6");
+    public User Register(String fullName ,String email,String password,String address){
+
+
+        User existing = userRepository.findUserByEmail(email);
+        if(existing != null) {
+            System.out.println("Email already exists");
         }
 
-        List<User> users = userRepository.getAllUsers();
+        return userRepository.createUser(fullName,  email, password, address);
+    }
 
-        for(User user : users){
-            if(user.getEmail().equals(email)){
-                System.out.println("Email already exists");
-                break;
-            }
-        }
-        boolean isCreated = userRepository.createUser(fullName,  email, password, address);
-        if(isCreated){
-            System.out.println("User created successfully");
+    public void Login(String email,String password){
+         User  user = userRepository.findUserByEmail(email);
 
+        if(user == null) {
+            System.out.println("Email Worng");
         }
-        else{
-            System.out.println("User creation failed");
+        if (user.getPassword().equals(password)) {
+            System.out.println("Login successful");
         }
     }
 
-    public void Login(){
-
+    public User findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
 }
