@@ -18,6 +18,12 @@ public class User {
         this.address = address;
     }
 
+    public UUID getId() {
+        return this.id;
+    }
+    public String getFullName() {
+        return this.fullName;
+    }
     public String getEmail(){
         return this.email;
     }

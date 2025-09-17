@@ -3,15 +3,19 @@ package ui;
 import repositories.UserRepository;
 import services.AuthService;
 import model.User;
+import util.Session;
+
 import java.util.Scanner;
 
 public class AccountMenu {
     private UserRepository userRepository = new UserRepository();
     private AuthService authService = new AuthService(userRepository);
+    private Session session  ;
 
     public void showMenu() {
 
         int choice;
+        session = new Session();
         Scanner sc = new Scanner(System.in);
 
 
@@ -54,34 +58,39 @@ public class AccountMenu {
                     address = sc.nextLine();
 
 
-
-
-
                     User isCreated = this.authService.Register(fullName, email, password, address);
                     if (isCreated != null) {
                         System.out.println("Account created successfully");
                     } else {
                         System.out.println("Registration failed. Try again.");
                     }
-
                     break;
                 case 2:
+                    User user ;
+                    do{
                     System.out.println("Enter your email");
                     email = sc.nextLine();
                     System.out.println("Enter your password ");
                     password = sc.nextLine();
 
-                    this.authService.Login(email, password);
+                   user = this.authService.Login(email, password);
+                        if (user == null) {
+                            System.out.println("email or password is wrong , please try again");
+                        }
+                    }while (user == null);
 
+                    session = Session.getInstance();
+                    session.setAttribute("fullName", user.getFullName());
+                    session.setAttribute("email", user.getEmail());
+                    new HomeMenu().showMenu();
                     break;
                 case 3:
                     System.exit(0);
-
                     break;
                 default:
                     System.out.println("Invalid choice");
                     break;
             }
-        }while (true);
+        }while (session.getAttribute("email") == null);
     }
 }

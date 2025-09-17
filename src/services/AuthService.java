@@ -20,22 +20,18 @@ public class AuthService {
 
 
         User existing = userRepository.findUserByEmail(email);
-        if(existing != null) {
-            System.out.println("Email already exists");
-        }
+
 
         return userRepository.createUser(fullName,  email, password, address);
     }
 
-    public void Login(String email,String password){
+    public User Login(String email,String password){
          User  user = userRepository.findUserByEmail(email);
 
-        if(user == null) {
-            System.out.println("Email Worng");
+        if(user != null && user.getPassword().equals(password)) {
+            return user;
         }
-        if (user.getPassword().equals(password)) {
-            System.out.println("Login successful");
-        }
+        return null;
     }
 
     public User findUserByEmail(String email) {
