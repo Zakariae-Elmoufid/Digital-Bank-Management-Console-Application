@@ -3,6 +3,7 @@ package services;
 import  model.User;
 import  repositories.UserRepository;
 import ui.AccountMenu;
+import util.Session;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class AuthService {
 
 
     private UserRepository userRepository;
+
 
     public  AuthService (UserRepository userRepository){
           this.userRepository = userRepository;
@@ -36,5 +38,21 @@ public class AuthService {
 
     public User findUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
+    }
+
+    public  User   updateProfile(String email, String address){
+        Session session =  Session.getInstance();
+        List<User> users = userRepository.getAllUsers();
+
+        for(User user : users){
+            if(user.getEmail().equals(session.getAttribute("email"))){
+                user.setAddress(address);
+                user.setEmail(email);
+                session.setAttribute("email", email);
+                session.setAttribute("address", user.getAddress());
+                return user;
+            }
+        }
+        return null;
     }
 }

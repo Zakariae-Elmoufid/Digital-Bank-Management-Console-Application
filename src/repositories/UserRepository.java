@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class UserRepository implements UserInterface {
 
-    private  List<User> users = new ArrayList<>();
+    private  static List<User> users = new ArrayList<>();
 
 
     public User createUser( String fullName, String email, String password, String address) {

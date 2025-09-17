@@ -82,6 +82,8 @@ public class AccountMenu {
                     session = Session.getInstance();
                     session.setAttribute("fullName", user.getFullName());
                     session.setAttribute("email", user.getEmail());
+                    session.setAttribute("address", user.getAddress());
+                    session.setAttribute("password", user.getPassword());
                     new HomeMenu().showMenu();
                     break;
                 case 3:
