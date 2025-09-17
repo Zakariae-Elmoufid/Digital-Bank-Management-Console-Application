@@ -12,6 +12,7 @@ public class AuthService {
 
 
     private UserRepository userRepository;
+    private Session session =  Session.getInstance();
 
 
     public  AuthService (UserRepository userRepository){
@@ -41,18 +42,27 @@ public class AuthService {
     }
 
     public  User   updateProfile(String email, String address){
-        Session session =  Session.getInstance();
         List<User> users = userRepository.getAllUsers();
-
         for(User user : users){
-            if(user.getEmail().equals(session.getAttribute("email"))){
+            if(user.getEmail().equals(this.session.getAttribute("email"))){
                 user.setAddress(address);
                 user.setEmail(email);
-                session.setAttribute("email", email);
-                session.setAttribute("address", user.getAddress());
+                this.session.setAttribute("email", email);
+                this.session.setAttribute("address", user.getAddress());
                 return user;
             }
         }
         return null;
+    }
+
+    public boolean changePassword(String oldPassword, String newPassword){
+        List<User> users = userRepository.getAllUsers();
+        for(User user : users){
+            if(user.getEmail().equals(this.session.getAttribute("email")) && user.getPassword().equals(oldPassword)){
+                user.setPassword(newPassword);
+               return true;
+            }
+        }
+        return false;
     }
 }

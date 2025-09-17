@@ -66,6 +66,23 @@ public class HomeMenu {
                         System.out.println("Your profiel has been up successfully");
                     }
                     break;
+                case 7:
+                    System.out.println("Entre your old password: ");
+                    String oldPassword = sc.nextLine();
+                    sc.nextLine();
+                    System.out.println("Enter new password: ");
+                    String newPassword = sc.nextLine();
+                    do{
+                    System.out.println("Your new password: " + newPassword);
+                    }while (newPassword.length() > 6);
+
+                    boolean isChanged = authService.changePassword(oldPassword, newPassword);
+
+                    if (isChanged) {
+                        System.out.println("Password has been changed successfully");
+                    }
+                    break;
+
                 default:
                     System.out.println("Invalid choice");
                     break;
