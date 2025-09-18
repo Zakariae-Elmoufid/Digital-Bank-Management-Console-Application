@@ -1,0 +1,31 @@
+package model;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDateTime;
+import java.util.Random;
+import java.util.UUID;
+
+public class Account {
+    private String id;
+    private BigDecimal balance;
+    private LocalDateTime createAt;
+    private boolean active;
+    private UUID userId;
+
+    Random random = new Random();
+
+    public Account( UUID userId) {
+        this.id = "BK-"+ random.nextInt(1000) +"-"+random.nextInt(1000);
+        this.balance = new BigDecimal("0.00");
+        this.createAt = LocalDateTime.now() ;
+        this.userId = userId;
+        this.active = true;
+    }
+
+
+
+
+
+
+}

@@ -44,11 +44,11 @@ public class AuthService {
     public  User   updateProfile(String email, String address){
         List<User> users = userRepository.getAllUsers();
         for(User user : users){
-            if(user.getEmail().equals(this.session.getAttribute("email"))){
+            if(user.getEmail().equals(this.session.getEmail())){
                 user.setAddress(address);
                 user.setEmail(email);
-                this.session.setAttribute("email", email);
-                this.session.setAttribute("address", user.getAddress());
+                this.session.setEmail(email);
+                this.session.setAddress(address);
                 return user;
             }
         }
@@ -58,7 +58,7 @@ public class AuthService {
     public boolean changePassword(String oldPassword, String newPassword){
         List<User> users = userRepository.getAllUsers();
         for(User user : users){
-            if(user.getEmail().equals(this.session.getAttribute("email")) && user.getPassword().equals(oldPassword)){
+            if(user.getEmail().equals(this.session.getEmail()) && user.getPassword().equals(oldPassword)){
                 user.setPassword(newPassword);
                return true;
             }

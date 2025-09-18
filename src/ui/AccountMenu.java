@@ -80,10 +80,11 @@ public class AccountMenu {
                     }while (user == null);
 
                     session = Session.getInstance();
-                    session.setAttribute("fullName", user.getFullName());
-                    session.setAttribute("email", user.getEmail());
-                    session.setAttribute("address", user.getAddress());
-                    session.setAttribute("password", user.getPassword());
+                    session.setFullName(user.getFullName());
+                    session.setEmail( user.getEmail());
+                    session.setAddress( user.getAddress());
+                    session.setPassword( user.getPassword());
+                    session.setUserId(user.getId());
                     new HomeMenu().showMenu();
                     break;
                 case 3:
@@ -93,6 +94,6 @@ public class AccountMenu {
                     System.out.println("Invalid choice");
                     break;
             }
-        }while (session.getAttribute("email") == null);
+        }while (session.getEmail() == null);
     }
 }
