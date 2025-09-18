@@ -1,7 +1,6 @@
 package model;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.UUID;
@@ -24,8 +23,14 @@ public class Account {
     }
 
 
-
-
-
-
+    @Override
+    public String toString() {
+        return "Account{" +
+                "Rib ='" + id + '\'' +
+                ", balance=" + balance +
+                ", createAt=" + createAt +
+                ", active=" + active +
+                ", userId=" + userId +
+                '}';
+    }
 }

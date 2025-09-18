@@ -1,6 +1,7 @@
 package ui;
 
 
+import model.Account;
 import model.User;
 import repositories.AccountRepository;
 import repositories.UserRepository;
@@ -8,6 +9,7 @@ import services.AccountService;
 import services.AuthService;
 import util.Session;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class HomeMenu {
@@ -61,6 +63,10 @@ public class HomeMenu {
                         break;
                     }
                     break;
+                case 2:
+                    System.out.println("My Account List");
+                    List<Account> acccounts = accountService.listAccount();
+                    acccounts.forEach(System.out::println);
                 case 6:
                     String email = session.getEmail();
                     String address = session.getAddress();

@@ -3,6 +3,7 @@ package services;
 import model.Account;
 import repositories.AccountRepository;
 
+import java.util.List;
 import java.util.UUID;
 
 public class AccountService {
@@ -20,5 +21,9 @@ public class AccountService {
             return true;
         }
         return false;
+    }
+
+    public List<Account> listAccount() {
+        return accountRepository.getAll();
     }
 }

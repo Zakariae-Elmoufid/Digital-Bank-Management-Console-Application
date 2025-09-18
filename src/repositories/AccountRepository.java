@@ -18,4 +18,8 @@ public class AccountRepository implements AccountInterface {
         return account;
     }
 
+    public List<Account> getAll(){
+        return accounts;
+    }
+
 }
