@@ -27,8 +27,15 @@ public class Account {
         return this.id;
     }
 
+    public BigDecimal getBalance(){
+        return this.balance;
+    }
+
     public  void  diposit(BigDecimal amount){
         this.balance = this.balance.add(amount);
+    }
+    public  void  withdraw(BigDecimal amount){
+        this.balance = this.balance.subtract(amount);
     }
 
 

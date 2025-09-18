@@ -33,7 +33,8 @@ public class HomeMenu {
             System.out.println("1. Create account ");
             System.out.println("2. List my accounts ");
             System.out.println("3. Deposit");
-            System.out.println("4. Transfer");
+            System.out.println("4. Withdraw");
+            System.out.println("5. Transfer");
             System.out.println("5. Transaction history");
             System.out.println("6. Update profile");
             System.out.println("7. Change password");
@@ -78,16 +79,40 @@ public class HomeMenu {
                         acccounts.forEach(System.out::println);
                         System.out.println("Enter your rib account : ");
                         String ribAccount = sc.next();
-                        boolean isdiposit = accountService.diposit(amount,ribAccount);
-                        if(isdiposit){
-                           System.out.println("Account successfully deposited");
+                        Account account = accountService.verifyRib(ribAccount);
+                        if(account != null){
+                            boolean isdiposit = accountService.diposit(amount,account);
+                            if(isdiposit){
+                                System.out.println("Account successfully deposited");
+                            }
+                            else {
+                                System.out.println("Account failed");
+                            }
+                        }else {
+                            System.out.println("Account not found");
                         }
-                        else {
-                            System.out.println("Account failed");
-                        }
+
                     break;
                 case 4:
-                    System.out.println("Enter your deposit amount: ");
+                    System.out.println("Enter your Withdraw amount: ");
+                    BigDecimal withdrawAmount = sc.nextBigDecimal();
+                    acccounts = accountService.listAccount();
+                    acccounts.forEach(System.out::println);
+                    System.out.println("Enter your rib account : ");
+                    String ribAccountWithdraw = sc.next();
+                    Account acc = accountService.verifyRib(ribAccountWithdraw);
+                    if(acc != null){
+                        boolean isWithdraw = accountService.withdraw(withdrawAmount,acc);
+                        if(!isWithdraw){
+                            System.out.println("Account withdraw failed");
+                        }
+                        System.out.println("Account successfully deposited");
+
+                    }else {
+                        System.out.println("Account not found");
+                    }
+
+                     break;
                 case 6:
                     String email = session.getEmail();
                     String address = session.getAddress();

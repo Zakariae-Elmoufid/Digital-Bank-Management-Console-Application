@@ -28,10 +28,25 @@ public class AccountService {
         return accountRepository.getAll();
     }
 
-    public boolean diposit(BigDecimal amount,String rib) {
+    public Account verifyRib(String rib){
         List<Account> accounts =  this.listAccount();
         Account  account = (Account) accounts.stream().filter(acc -> acc.getId().equals(rib)).findFirst().orElse(null);
+        return account;
+    }
+
+    public boolean diposit(BigDecimal amount,Account account) {
+        List<Account> accounts =  this.listAccount();
         account.diposit(amount);
         return true;
+    }
+
+    public boolean withdraw(BigDecimal amount,Account account) {
+        if(amount.compareTo(account.getBalance()) < 0){
+            account.withdraw(amount);
+            return true;
+        }else{
+            return false;
+        }
+
     }
 }
