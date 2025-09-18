@@ -23,6 +23,15 @@ public class Account {
     }
 
 
+    public String getId(){
+        return this.id;
+    }
+
+    public  void  diposit(BigDecimal amount){
+        this.balance = this.balance.add(amount);
+    }
+
+
     @Override
     public String toString() {
         return "Account{" +

@@ -9,6 +9,7 @@ import services.AccountService;
 import services.AuthService;
 import util.Session;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Scanner;
 
@@ -67,6 +68,26 @@ public class HomeMenu {
                     System.out.println("My Account List");
                     List<Account> acccounts = accountService.listAccount();
                     acccounts.forEach(System.out::println);
+                    break;
+                case 3:
+                    System.out.println("Enter your deposit amount: ");
+                    BigDecimal amount =  sc.nextBigDecimal();
+
+
+                        acccounts = accountService.listAccount();
+                        acccounts.forEach(System.out::println);
+                        System.out.println("Enter your rib account : ");
+                        String ribAccount = sc.next();
+                        boolean isdiposit = accountService.diposit(amount,ribAccount);
+                        if(isdiposit){
+                           System.out.println("Account successfully deposited");
+                        }
+                        else {
+                            System.out.println("Account failed");
+                        }
+                    break;
+                case 4:
+                    System.out.println("Enter your deposit amount: ");
                 case 6:
                     String email = session.getEmail();
                     String address = session.getAddress();
