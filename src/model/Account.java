@@ -27,6 +27,10 @@ public class Account {
         return this.id;
     }
 
+    public void setActive(boolean active){
+        this.active = active;
+    }
+
     public BigDecimal getBalance(){
         return this.balance;
     }

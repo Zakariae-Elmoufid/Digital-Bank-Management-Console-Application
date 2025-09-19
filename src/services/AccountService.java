@@ -34,5 +34,11 @@ public class AccountService {
         return account;
     }
 
+    public boolean closeAccount(String  accountId){
+        List<Account> accounts =  this.listAccount();
+        Account account =  accounts.stream().filter(acc -> acc.getId().equals(accountId)).findFirst().orElse(null);
+        Account acc =  accountRepository.colseAccount(account);
+    }
+
 
 }

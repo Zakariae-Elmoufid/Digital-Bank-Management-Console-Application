@@ -22,6 +22,9 @@ public class AccountRepository implements AccountInterface {
         return accounts;
     }
 
-
+    public Account  colseAccount(Account account){
+       account.setActive(false);
+       return account;
+    }
 
 }

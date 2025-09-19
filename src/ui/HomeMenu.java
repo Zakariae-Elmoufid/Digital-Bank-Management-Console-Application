@@ -2,6 +2,7 @@ package ui;
 
 
 import model.Account;
+import model.Transaction;
 import model.User;
 import repositories.AccountRepository;
 import repositories.TransactionRepository;
@@ -12,6 +13,8 @@ import services.TransactionService;
 import util.Session;
 
 import java.math.BigDecimal;
+import java.sql.SQLOutput;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
@@ -126,11 +129,14 @@ public class HomeMenu {
                     System.out.println("Enter RIB TransferIn :");
                     String ribTransferIn = sc.nextLine();
 
+                    System.out.println("Enter description :");
+                    String description = sc.nextLine();
+
                     Account fromAccount = accountService.verifyRib(TransferOut);
                     Account  toAccount = accountService.verifyRib(ribTransferIn);
 
 
-                    boolean isTransfer = transactionService.transfer(fromAccount, toAccount , transferAmount);
+                    boolean isTransfer = transactionService.transfer(fromAccount, toAccount , transferAmount ,description);
                     if(isTransfer){
                         System.out.println("Account successfully transfered");
                     }
@@ -169,6 +175,7 @@ public class HomeMenu {
                     if(user != null){
                         System.out.println("Your profile has been up successfully");
                     }
+
                     break;
                 case 7:
                     String newPassword;
@@ -192,7 +199,18 @@ public class HomeMenu {
                         choice = 7;
                     }
                     break;
-
+                case 8:
+                    HashSet<Transaction> transactions = transactionService.getAllTransactions();
+                    transactions.forEach(System.out::println);
+                    break;
+                case 9:
+                    System.out.println("Entre account identifier that you  close ");
+                    String identifier = sc.nextLine();
+                    accountService.closeAccount(identifier);
+                case 10:
+                    Session.endSession();
+                    new AccountMenu().showMenu();
+                    break;
                 default:
                     System.out.println("Invalid choice");
                     break;

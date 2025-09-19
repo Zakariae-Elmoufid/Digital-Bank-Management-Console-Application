@@ -1,10 +1,12 @@
 package services;
 
 import model.Account;
+import model.Transaction;
 import repositories.AccountRepository;
 import repositories.TransactionRepository;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.List;
 
 public class TransactionService {
@@ -23,28 +25,35 @@ public class TransactionService {
 
 
     public boolean deposit(BigDecimal amount, Account account) {
-        List<Account> accounts =  this.listAccount();
-        account.diposit(amount);
-        return true;
+        Transaction transaction =  transactionRepository.deposit(amount, account);
+        if(transaction != null) {
+            return true;
+        }
+        return false;
+
     }
 
     public boolean withdraw(BigDecimal amount,Account account) {
         if(amount.compareTo(account.getBalance()) < 0){
-            account.withdraw(amount);
-            return true;
-        }else{
-            return false;
+            Transaction transaction = transactionRepository.withdraw(amount,account);
+            if(transaction != null) {
+                return true;
+            }
         }
+            return false;
     }
 
-    public boolean transfer(Account fromAccount, Account toAccount , BigDecimal amount){
+    public boolean transfer(Account fromAccount, Account toAccount , BigDecimal amount ,String description){
         if(amount.compareTo(fromAccount.getBalance()) < 0 ){
-            this.withdraw(amount,fromAccount);
-            this.deposit(amount,toAccount);
+              Transaction transaction = transactionRepository.transfer(fromAccount,toAccount,amount,description);
             return true;
         }
         return false;
     }
 
+    public HashSet<Transaction> getAllTransactions()
+    {
+       return  transactionRepository.getAll();
+    }
 
 }

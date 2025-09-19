@@ -54,8 +54,6 @@ public class Session {
     }
 
     private  static  Session instance;
-//    private  Map<String , String> session =  new HashMap<>();
-//
 
     public  static Session getInstance(){
         if(instance==null){
@@ -65,6 +63,11 @@ public class Session {
     }
 
     public static  void endSession(){
+        instance.userId = null;
+        instance.password = null;
+        instance.email = null;
+        instance.fullName = null;
+        instance.address = null;
         instance = null;
     }
 
