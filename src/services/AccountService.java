@@ -34,19 +34,5 @@ public class AccountService {
         return account;
     }
 
-    public boolean diposit(BigDecimal amount,Account account) {
-        List<Account> accounts =  this.listAccount();
-        account.diposit(amount);
-        return true;
-    }
 
-    public boolean withdraw(BigDecimal amount,Account account) {
-        if(amount.compareTo(account.getBalance()) < 0){
-            account.withdraw(amount);
-            return true;
-        }else{
-            return false;
-        }
-
-    }
 }

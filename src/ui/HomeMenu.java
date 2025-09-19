@@ -4,9 +4,11 @@ package ui;
 import model.Account;
 import model.User;
 import repositories.AccountRepository;
+import repositories.TransactionRepository;
 import repositories.UserRepository;
 import services.AccountService;
 import services.AuthService;
+import services.TransactionService;
 import util.Session;
 
 import java.math.BigDecimal;
@@ -20,6 +22,8 @@ public class HomeMenu {
          AuthService authService = new AuthService(userRepository);
          AccountRepository accountRepository = new AccountRepository();
          AccountService accountService = new AccountService(accountRepository);
+         TransactionRepository transactionRepository = new TransactionRepository();
+         TransactionService transactionService = new TransactionService(transactionRepository);
 
 
 
@@ -35,12 +39,12 @@ public class HomeMenu {
             System.out.println("3. Deposit");
             System.out.println("4. Withdraw");
             System.out.println("5. Transfer");
-            System.out.println("5. Transaction history");
             System.out.println("6. Update profile");
             System.out.println("7. Change password");
-            System.out.println("8. Close account");
-            System.out.println("9. Logout");
-            System.out.println("10. Exit");
+            System.out.println("8. Transaction history");
+            System.out.println("9. Close account");
+            System.out.println("10. Logout");
+            System.out.println("11. Exit");
             System.out.println("========================================");
 
             System.out.print("Enter your choice: ");
@@ -74,14 +78,13 @@ public class HomeMenu {
                     System.out.println("Enter your deposit amount: ");
                     BigDecimal amount =  sc.nextBigDecimal();
 
-
                         acccounts = accountService.listAccount();
                         acccounts.forEach(System.out::println);
                         System.out.println("Enter your rib account : ");
                         String ribAccount = sc.next();
                         Account account = accountService.verifyRib(ribAccount);
                         if(account != null){
-                            boolean isdiposit = accountService.diposit(amount,account);
+                            boolean isdiposit = transactionService.deposit(amount,account);
                             if(isdiposit){
                                 System.out.println("Account successfully deposited");
                             }
@@ -102,7 +105,7 @@ public class HomeMenu {
                     String ribAccountWithdraw = sc.next();
                     Account acc = accountService.verifyRib(ribAccountWithdraw);
                     if(acc != null){
-                        boolean isWithdraw = accountService.withdraw(withdrawAmount,acc);
+                        boolean isWithdraw = transactionService.withdraw(withdrawAmount,acc);
                         if(!isWithdraw){
                             System.out.println("Account withdraw failed");
                         }
@@ -113,6 +116,30 @@ public class HomeMenu {
                     }
 
                      break;
+                case 5:
+                    System.out.println("Enter amount to transfer");
+                    BigDecimal transferAmount = sc.nextBigDecimal();
+                    sc.nextLine();
+                    System.out.println("Enter RIB TransferOut :");
+                    String TransferOut = sc.nextLine();
+
+                    System.out.println("Enter RIB TransferIn :");
+                    String ribTransferIn = sc.nextLine();
+
+                    Account fromAccount = accountService.verifyRib(TransferOut);
+                    Account  toAccount = accountService.verifyRib(ribTransferIn);
+
+
+                    boolean isTransfer = transactionService.transfer(fromAccount, toAccount , transferAmount);
+                    if(isTransfer){
+                        System.out.println("Account successfully transfered");
+                    }
+                    else{
+                        System.out.println("Account transfered failed");
+                    }
+                   break;
+
+
                 case 6:
                     String email = session.getEmail();
                     String address = session.getAddress();
@@ -140,7 +167,7 @@ public class HomeMenu {
 
                     User user =  authService.updateProfile(email, address);
                     if(user != null){
-                        System.out.println("Your profiel has been up successfully");
+                        System.out.println("Your profile has been up successfully");
                     }
                     break;
                 case 7:
