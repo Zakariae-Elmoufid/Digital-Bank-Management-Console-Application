@@ -34,10 +34,25 @@ public class AccountService {
         return account;
     }
 
-    public boolean closeAccount(String  accountId){
+    public String closeAccount(String  accountId){
         List<Account> accounts =  this.listAccount();
-        Account account =  accounts.stream().filter(acc -> acc.getId().equals(accountId)).findFirst().orElse(null);
-        Account acc =  accountRepository.colseAccount(account);
+        Account account = accounts.stream()
+                .filter(acc -> acc.getId().equals(accountId))
+                .findFirst()
+                .orElse(null);
+
+        if (account == null) {
+            return "Account not found";
+        }
+
+        // Check balance
+        if (account.getBalance().compareTo(BigDecimal.ZERO) > 0) {
+            return "Balance is more than 0, cannot close account";
+        }
+
+        // Close account
+        accountRepository.colseAccount(account);
+        return "Account closed successfully";
     }
 
 

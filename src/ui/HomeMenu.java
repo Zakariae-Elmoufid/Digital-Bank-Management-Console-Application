@@ -52,7 +52,7 @@ public class HomeMenu {
 
             System.out.print("Enter your choice: ");
             choice = sc.nextInt();
-
+            sc.nextLine();
             switch(choice) {
                 case 1:
                     System.out.println("if you confirm creation your account: ");
@@ -181,7 +181,6 @@ public class HomeMenu {
                     String newPassword;
                     System.out.println("Entre your old password: ");
                     String oldPassword = sc.nextLine();
-                    sc.nextLine();
                     do {
                     System.out.println("Enter new password: ");
                      newPassword = sc.nextLine();
@@ -196,7 +195,6 @@ public class HomeMenu {
                         System.out.println("Password has been changed successfully");
                     }else{
                         System.out.println("you have a probleme in your password");
-                        choice = 7;
                     }
                     break;
                 case 8:
@@ -206,7 +204,10 @@ public class HomeMenu {
                 case 9:
                     System.out.println("Entre account identifier that you  close ");
                     String identifier = sc.nextLine();
-                    accountService.closeAccount(identifier);
+                    String resultMessage = accountService.closeAccount(identifier);
+                    System.out.println(resultMessage);
+                    break;
+
                 case 10:
                     Session.endSession();
                     new AccountMenu().showMenu();

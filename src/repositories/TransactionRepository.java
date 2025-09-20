@@ -29,8 +29,8 @@ public class TransactionRepository<accountId> implements TransactionInterface {
     }
 
     public Transaction transfer(Account fromAccount, Account toAccount, BigDecimal amount, String description) {
-        this.withdraw(amount,fromAccount);
-        this.deposit(amount,toAccount);
+        fromAccount.withdraw(amount);
+        toAccount.diposit(amount);
         Transaction transferIn = new Transaction("TRANSFERIN",amount,fromAccount.getId(),toAccount.getId(),description);
         transactions.add(transferIn);
         Transaction transferOut = new Transaction("TRANSFEROUT",amount,toAccount.getId(),fromAccount.getId(),description);
